@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Bell, Search, User, Settings, LogOut, Menu } from "lucide-react";
+import { Bell, Search, User, Settings, LogOut, Menu, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { SidebarTrigger } from "@/components/ui/sidebar";
+import { useTheme } from "./ThemeProvider";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,23 +15,37 @@ import {
 import { Badge } from "@/components/ui/badge";
 
 export function TopNavbar() {
-  const [notifications] = useState(5); // Mock notification count
+  const [notifications] = useState(3); // Mock notification count
+  const { theme, setTheme } = useTheme();
 
   return (
-    <header className="h-16 bg-card border-b border-border flex items-center justify-between px-6 shadow-soft">
-      {/* Search Bar */}
-      <div className="flex-1 max-w-md">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input 
-            placeholder="Search customers, products, invoices..." 
-            className="pl-10 bg-background/50 border-border focus:bg-background transition-colors"
-          />
+    <header className="h-16 bg-card border-b border-border flex items-center justify-between px-6">
+      {/* Left Side - Sidebar Toggle & Search */}
+      <div className="flex items-center space-x-4 flex-1">
+        <SidebarTrigger className="h-9 w-9" />
+        <div className="flex-1 max-w-md">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input 
+              placeholder="Search customers, items, invoices..." 
+              className="pl-10 bg-muted/30 border-border focus:bg-background transition-colors"
+            />
+          </div>
         </div>
       </div>
 
       {/* Right Side Actions */}
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-2">
+        {/* Theme Toggle */}
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+        >
+          <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+        </Button>
+
         {/* Notifications */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -50,30 +66,21 @@ export function TopNavbar() {
             <DropdownMenuSeparator />
             <DropdownMenuItem className="flex flex-col items-start p-3">
               <div className="flex items-center justify-between w-full">
-                <span className="font-medium text-sm">Low Stock Alert</span>
-                <span className="text-xs text-muted-foreground">2 mins ago</span>
+                <span className="font-medium text-sm">Coca Cola 500ml - Only 12 units left</span>
+                <span className="text-xs text-destructive">•</span>
               </div>
-              <p className="text-xs text-muted-foreground mt-1">
-                Maggi 2-Minute Noodles is running low in Warehouse A
-              </p>
             </DropdownMenuItem>
             <DropdownMenuItem className="flex flex-col items-start p-3">
               <div className="flex items-center justify-between w-full">
-                <span className="font-medium text-sm">Payment Due</span>
-                <span className="text-xs text-muted-foreground">1 hour ago</span>
+                <span className="font-medium text-sm">Payment reminder for ABC Retailers</span>
+                <span className="text-xs text-muted-foreground">2h</span>
               </div>
-              <p className="text-xs text-muted-foreground mt-1">
-                Customer ABC Mart has pending payment of ₹25,000
-              </p>
             </DropdownMenuItem>
             <DropdownMenuItem className="flex flex-col items-start p-3">
               <div className="flex items-center justify-between w-full">
-                <span className="font-medium text-sm">Expiry Alert</span>
-                <span className="text-xs text-muted-foreground">3 hours ago</span>
+                <span className="font-medium text-sm">Stock shipment delayed</span>
+                <span className="text-xs text-muted-foreground">1d</span>
               </div>
-              <p className="text-xs text-muted-foreground mt-1">
-                Batch #B001 expires in 7 days
-              </p>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -81,13 +88,13 @@ export function TopNavbar() {
         {/* User Profile */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-primary rounded-full flex items-center justify-center">
+            <Button variant="ghost" className="flex items-center space-x-2 p-2">
+              <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
                 <User className="h-4 w-4 text-primary-foreground" />
               </div>
               <div className="hidden md:block text-left">
                 <p className="text-sm font-medium">Admin User</p>
-                <p className="text-xs text-muted-foreground">admin@fmcg.com</p>
+                <p className="text-xs text-muted-foreground">admin@fmcgerp.com</p>
               </div>
             </Button>
           </DropdownMenuTrigger>

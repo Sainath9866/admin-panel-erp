@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import {
-  BarChart3,
+  LayoutDashboard,
   Settings,
   Receipt,
   Package,
@@ -23,7 +23,8 @@ import {
   ScrollText,
   RefreshCw,
   TrendingUp,
-  Calculator
+  Calculator,
+  Layers3
 } from "lucide-react";
 import {
   Sidebar as SidebarUI,
@@ -35,7 +36,6 @@ import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarGroupContent,
-  SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
 import {
@@ -47,12 +47,12 @@ import {
 const menuItems = [
   {
     title: "Dashboard",
-    icon: BarChart3,
+    icon: LayoutDashboard,
     url: "/",
   },
   {
     title: "Masters",
-    icon: Settings,
+    icon: Layers3,
     subItems: [
       {
         title: "Journal Master",
@@ -288,16 +288,14 @@ export function Sidebar() {
         <Collapsible key={item.title} open={isMenuOpen} onOpenChange={() => toggleMenu(item.title)}>
           <CollapsibleTrigger asChild>
             <SidebarMenuButton
-              className={`w-full justify-between nav-hover ${isItemActive ? 'nav-active' : ''}`}
+              className={`w-full justify-between text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground rounded-md ${isItemActive ? 'bg-sidebar-primary text-sidebar-primary-foreground' : ''}`}
               style={{ paddingLeft: `${(level + 1) * 12}px` }}
             >
               <div className="flex items-center">
-                {item.icon && <item.icon className="h-4 w-4 mr-2" />}
-                {!collapsed && <span>{item.title}</span>}
+                {item.icon && <item.icon className="h-4 w-4 mr-3" />}
+                <span>{item.title}</span>
               </div>
-              {!collapsed && (
-                isMenuOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />
-              )}
+              {isMenuOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
             </SidebarMenuButton>
           </CollapsibleTrigger>
           <CollapsibleContent>
@@ -311,14 +309,14 @@ export function Sidebar() {
 
     return (
       <SidebarMenuItem key={item.title || item.url}>
-        <SidebarMenuButton asChild className={`nav-hover ${isActive(item.url) ? 'nav-active' : ''}`}>
+        <SidebarMenuButton asChild className={`text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground rounded-md ${isActive(item.url) ? 'bg-sidebar-primary text-sidebar-primary-foreground' : ''}`}>
           <NavLink 
             to={item.url} 
             className="flex items-center w-full"
             style={{ paddingLeft: `${(level + 1) * 12}px` }}
           >
-            {item.icon && <item.icon className="h-4 w-4 mr-2" />}
-            {!collapsed && <span>{item.title}</span>}
+            {item.icon && <item.icon className="h-4 w-4 mr-3" />}
+            <span>{item.title}</span>
           </NavLink>
         </SidebarMenuButton>
       </SidebarMenuItem>
@@ -326,25 +324,22 @@ export function Sidebar() {
   };
 
   return (
-    <SidebarUI className={collapsed ? "w-16" : "w-64"} collapsible>
+    <SidebarUI className="border-r-0">
       <SidebarHeader className="border-b border-sidebar-border p-4">
-        <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-            <Building2 className="h-5 w-5 text-primary-foreground" />
+        <div className="flex items-center space-x-3">
+          <div className="w-8 h-8 bg-sidebar-primary rounded-md flex items-center justify-center">
+            <Layers3 className="h-5 w-5 text-sidebar-primary-foreground" />
           </div>
-          {!collapsed && (
-            <div>
-              <h2 className="text-lg font-semibold text-sidebar-foreground">FMCG ERP</h2>
-              <p className="text-xs text-sidebar-foreground/60">Distributor Panel</p>
-            </div>
-          )}
+          <div>
+            <h2 className="text-lg font-semibold text-sidebar-foreground">FMCG ERP</h2>
+            <p className="text-xs text-sidebar-foreground/60">Distributor Panel</p>
+          </div>
         </div>
-        <SidebarTrigger className="ml-auto" />
       </SidebarHeader>
 
-      <SidebarContent>
+      <SidebarContent className="px-0">
         <SidebarGroup>
-          <SidebarMenu>
+          <SidebarMenu className="px-2 pt-4">
             {menuItems.map(item => renderMenuItem(item))}
           </SidebarMenu>
         </SidebarGroup>

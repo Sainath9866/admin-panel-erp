@@ -7,7 +7,8 @@ import {
   AlertTriangle,
   DollarSign,
   Calendar,
-  BarChart3
+  BarChart3,
+  FileText
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -17,48 +18,66 @@ import { Progress } from "@/components/ui/progress";
 const kpiCards = [
   {
     title: "Total Sales",
-    value: "₹12,45,680",
+    value: "₹12,45,678",
     change: "+12.5%",
-    trend: "up",
-    period: "This month",
+    period: "This Month",
+    icon: TrendingUp,
+    color: "text-success"
+  },
+  {
+    title: "Purchases", 
+    value: "₹8,92,340",
+    change: "-3.2%",
+    period: "This Month",
     icon: ShoppingCart,
-    variant: "primary"
+    color: "text-destructive"
   },
   {
-    title: "Purchase Orders", 
-    value: "₹8,76,540",
-    change: "+8.2%",
-    trend: "up",
-    period: "This month",
-    icon: Package,
-    variant: "success"
-  },
-  {
-    title: "Active Customers",
+    title: "Customers",
     value: "1,234",
-    change: "+15.3%",
-    trend: "up",
-    period: "This month", 
+    change: "+8.1%",
+    period: "Active", 
     icon: Users,
-    variant: "info"
+    color: "text-success"
   },
   {
-    title: "Low Stock Items",
+    title: "Low Stock",
     value: "23",
-    change: "+4",
-    trend: "down",
-    period: "Items to reorder",
+    change: "",
+    period: "Items",
     icon: AlertTriangle,
-    variant: "warning"
+    color: "text-warning"
+  },
+  {
+    title: "Receivables",
+    value: "₹3,45,000",
+    change: "-5.2%",
+    period: "Outstanding",
+    icon: DollarSign,
+    color: "text-destructive"
+  },
+  {
+    title: "Payables",
+    value: "₹2,10,000",
+    change: "+7.8%",
+    period: "Due",
+    icon: DollarSign,
+    color: "text-success"
   }
 ];
 
 const recentTransactions = [
-  { id: "INV-001", customer: "ABC Mart", amount: "₹15,670", status: "Paid", date: "Today" },
-  { id: "INV-002", customer: "XYZ Store", amount: "₹8,940", status: "Pending", date: "Yesterday" },
-  { id: "INV-003", customer: "Quick Shop", amount: "₹22,480", status: "Paid", date: "2 days ago" },
-  { id: "INV-004", customer: "Super Bazaar", amount: "₹45,120", status: "Overdue", date: "3 days ago" },
-  { id: "INV-005", customer: "Family Store", amount: "₹12,350", status: "Paid", date: "4 days ago" },
+  { id: "INV-2024-001", customer: "ABC Retailers", amount: "₹15,250", status: "Paid" },
+  { id: "INV-2024-002", customer: "XYZ Store", amount: "₹8,940", status: "Pending" },
+  { id: "INV-2024-003", customer: "Quick Shop", amount: "₹22,480", status: "Processing" },
+  { id: "INV-2024-004", customer: "Super Bazaar", amount: "₹45,120", status: "Overdue" }
+];
+
+const alerts = [
+  "Coca Cola 500ml - Only 12 units left",
+  "Payment due from ABC Retailers - ₹15,250",
+  "New order received - INV-2024-005",
+  "Stock shipment delayed - Batch #B456"
 ];
 
 const topProducts = [
@@ -73,146 +92,72 @@ export default function Dashboard() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mb-8">
         <div>
           <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
-          <p className="text-muted-foreground">Welcome back! Here's what's happening with your business today.</p>
+          <p className="text-muted-foreground">Welcome back! Here's your business overview</p>
         </div>
-        <div className="flex space-x-2">
-          <Button variant="outline">
-            <Calendar className="mr-2 h-4 w-4" />
-            Last 30 days
-          </Button>
-          <Button>
-            <BarChart3 className="mr-2 h-4 w-4" />
-            View Reports
-          </Button>
-        </div>
+        <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
+          Generate Report
+        </Button>
       </div>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8">
         {kpiCards.map((kpi, index) => (
-          <Card key={index} className={`kpi-card ${kpi.variant === 'primary' ? 'kpi-card-primary' : 
-                                                     kpi.variant === 'success' ? 'kpi-card-success' :
-                                                     kpi.variant === 'warning' ? 'kpi-card-warning' : ''}`}>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">{kpi.title}</CardTitle>
-              <kpi.icon className="h-4 w-4" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{kpi.value}</div>
-              <div className="flex items-center space-x-1 text-xs">
-                {kpi.trend === 'up' ? (
-                  <TrendingUp className="h-3 w-3 text-success" />
-                ) : (
-                  <TrendingDown className="h-3 w-3 text-destructive" />
-                )}
-                <span className={kpi.trend === 'up' ? 'text-success' : 'text-destructive'}>
-                  {kpi.change}
-                </span>
-                <span className="text-muted-foreground">{kpi.period}</span>
+          <Card key={index} className="bg-card border border-border">
+            <CardContent className="p-6">
+              <div className="flex items-start justify-between">
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground">{kpi.title}</p>
+                  <p className="text-2xl font-bold">{kpi.value}</p>
+                  {kpi.change && (
+                    <div className="flex items-center space-x-1">
+                      <span className={`text-xs ${kpi.color}`}>{kpi.change}</span>
+                      <span className="text-xs text-muted-foreground">{kpi.period}</span>
+                    </div>
+                  )}
+                  {!kpi.change && (
+                    <p className="text-xs text-muted-foreground">{kpi.period}</p>
+                  )}
+                </div>
+                <kpi.icon className={`h-5 w-5 ${kpi.color || 'text-muted-foreground'}`} />
               </div>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Sales Overview */}
-        <Card className="lg:col-span-2 erp-card">
-          <CardHeader>
-            <CardTitle>Sales Overview</CardTitle>
-            <CardDescription>Your sales performance this month</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-muted-foreground">Monthly Target</span>
-                <span className="text-sm font-medium">₹15,00,000</span>
-              </div>
-              <Progress value={83} className="h-2" />
-              <div className="flex justify-between text-xs text-muted-foreground">
-                <span>₹12,45,680 achieved</span>
-                <span>83% of target</span>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4 pt-4 border-t">
-                <div>
-                  <p className="text-sm text-muted-foreground">Cash Sales</p>
-                  <p className="text-lg font-semibold">₹8,76,540</p>
-                  <p className="text-xs text-success">+12% from last month</p>
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Credit Sales</p>
-                  <p className="text-lg font-semibold">₹3,69,140</p>
-                  <p className="text-xs text-warning">+5% from last month</p>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Quick Actions */}
-        <Card className="erp-card">
-          <CardHeader>
-            <CardTitle>Quick Actions</CardTitle>
-            <CardDescription>Frequently used functions</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 gap-2">
-              <Button variant="outline" className="justify-start">
-                <ShoppingCart className="mr-2 h-4 w-4" />
-                New Sale Invoice
-              </Button>
-              <Button variant="outline" className="justify-start">
-                <Package className="mr-2 h-4 w-4" />
-                Stock Entry
-              </Button>
-              <Button variant="outline" className="justify-start">
-                <Users className="mr-2 h-4 w-4" />
-                Add Customer
-              </Button>
-              <Button variant="outline" className="justify-start">
-                <DollarSign className="mr-2 h-4 w-4" />
-                Record Payment
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Bottom Section */}
+      {/* Bottom Content */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Transactions */}
-        <Card className="erp-card">
+        <Card className="bg-card border border-border">
           <CardHeader>
-            <CardTitle>Recent Transactions</CardTitle>
-            <CardDescription>Latest sales and payments</CardDescription>
+            <CardTitle className="flex items-center">
+              <FileText className="mr-2 h-5 w-5" />
+              Recent Transactions
+            </CardTitle>
+            <CardDescription>Latest sales, purchases, and payments</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {recentTransactions.map((transaction, index) => (
-                <div key={index} className="flex items-center justify-between py-2 border-b last:border-0">
-                  <div>
-                    <p className="text-sm font-medium">{transaction.id}</p>
-                    <p className="text-xs text-muted-foreground">{transaction.customer}</p>
+                <div key={index} className="flex items-center justify-between py-2">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-2 h-2 bg-success rounded-full"></div>
+                    <div>
+                      <p className="text-sm font-medium">{transaction.id}</p>
+                      <p className="text-xs text-muted-foreground">{transaction.customer}</p>
+                    </div>
                   </div>
                   <div className="text-right">
                     <p className="text-sm font-medium">{transaction.amount}</p>
-                    <div className="flex items-center space-x-2">
-                      <Badge 
-                        variant={
-                          transaction.status === 'Paid' ? 'success' :
-                          transaction.status === 'Pending' ? 'warning' : 'destructive'
-                        }
-                        className="status-indicator text-xs"
-                      >
-                        {transaction.status}
-                      </Badge>
-                      <span className="text-xs text-muted-foreground">{transaction.date}</span>
-                    </div>
+                    <Badge 
+                      variant={transaction.status === 'Paid' ? 'default' : 'secondary'}
+                      className="text-xs"
+                    >
+                      {transaction.status}
+                    </Badge>
                   </div>
                 </div>
               ))}
@@ -220,30 +165,28 @@ export default function Dashboard() {
           </CardContent>
         </Card>
 
-        {/* Top Selling Products */}
-        <Card className="erp-card">
+        {/* Alerts */}
+        <Card className="bg-card border border-border">
           <CardHeader>
-            <CardTitle>Top Selling Products</CardTitle>
-            <CardDescription>Best performers this month</CardDescription>
+            <CardTitle className="flex items-center">
+              <AlertTriangle className="mr-2 h-5 w-5 text-warning" />
+              Alerts
+            </CardTitle>
+            <CardDescription>Important notifications</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {topProducts.map((product, index) => (
-                <div key={index} className="flex items-center justify-between py-2 border-b last:border-0">
-                  <div className="flex-1">
-                    <p className="text-sm font-medium">{product.name}</p>
-                    <p className="text-xs text-muted-foreground">{product.sold} units sold</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm font-medium">{product.revenue}</p>
-                    <p className="text-xs text-success">{product.growth}</p>
-                  </div>
+              {alerts.map((alert, index) => (
+                <div key={index} className="flex items-start space-x-3">
+                  <div className="w-2 h-2 bg-destructive rounded-full mt-2 flex-shrink-0"></div>
+                  <p className="text-sm">{alert}</p>
                 </div>
               ))}
             </div>
           </CardContent>
         </Card>
       </div>
+
     </div>
   );
 }
