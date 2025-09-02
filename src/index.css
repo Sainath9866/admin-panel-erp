@@ -2,212 +2,84 @@
 @tailwind components;
 @tailwind utilities;
 
-/* FMCG ERP - Exact UI Match Design System */
-
-@layer base {
-  :root {
-    /* Light Theme - Exact Match */
-    --background: 0 0% 97%;
-    --foreground: 0 0% 13%;
-
-    /* Card System */
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 13%;
-
-    /* Interactive Elements */
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 13%;
-
-    /* Primary - Exact Blue from Image */
-    --primary: 213 94% 68%;
-    --primary-foreground: 0 0% 98%;
-
-    /* Success Green */
-    --success: 142 76% 36%;
-    --success-foreground: 0 0% 98%;
-
-    /* Warning Orange */
-    --warning: 25 95% 53%;
-    --warning-foreground: 0 0% 98%;
-
-    /* Destructive Red */
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-
-    /* Info Blue */
-    --info: 199 89% 48%;
-    --info-foreground: 0 0% 98%;
-
-    /* Secondary Gray */
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 0 0% 13%;
-
-    /* Muted Colors */
-    --muted: 210 40% 96%;
-    --muted-foreground: 0 0% 45%;
-
-    /* Accent */
-    --accent: 210 40% 96%;
-    --accent-foreground: 0 0% 13%;
-
-    /* Borders & Inputs */
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 213 94% 68%;
-
-    /* Radius */
-    --radius: 0.5rem;
-
-    /* Sidebar - Dark Theme from Image */
-    --sidebar-background: 0 0% 9%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 213 94% 68%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 0 0% 15%;
-    --sidebar-accent-foreground: 0 0% 90%;
-    --sidebar-border: 0 0% 15%;
-    --sidebar-ring: 213 94% 68%;
-  }
-
-  .dark {
-    /* Dark Theme */
-    --background: 0 0% 9%;
-    --foreground: 0 0% 98%;
-
-    --card: 0 0% 13%;
-    --card-foreground: 0 0% 98%;
-
-    --popover: 0 0% 13%;
-    --popover-foreground: 0 0% 98%;
-
-    --primary: 213 94% 68%;
-    --primary-foreground: 0 0% 98%;
-
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 63%;
-
-    --accent: 0 0% 15%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-
-    --success: 142 76% 36%;
-    --success-foreground: 0 0% 98%;
-
-    --warning: 45 93% 47%;
-    --warning-foreground: 0 0% 98%;
-
-    --info: 199 89% 48%;
-    --info-foreground: 0 0% 98%;
-
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 213 94% 68%;
-
-    --sidebar-background: 0 0% 9%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 213 94% 68%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 0 0% 15%;
-    --sidebar-accent-foreground: 0 0% 90%;
-    --sidebar-border: 0 0% 15%;
-    --sidebar-ring: 213 94% 68%;
-  }
+/* Minimal reset to ensure app renders without missing CSS */
+html, body, #root {
+	height: 100%;
+	margin: 0;
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
-  }
-
-  /* Professional scrollbars */
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-
-  ::-webkit-scrollbar-track {
-    @apply bg-muted;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    @apply bg-border rounded-md;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-muted-foreground/50;
-  }
-
-  /* Smooth focus outlines */
-  :focus-visible {
-    outline: 2px solid hsl(var(--ring));
-    outline-offset: 2px;
-  }
+	* {
+		@apply border-border;
+	}
+	body {
+		@apply bg-background text-foreground;
+	}
 }
 
-@layer components {
-  /* ERP Status Indicators */
-  .status-indicator {
-    @apply inline-flex items-center px-2 py-1 rounded-full text-xs font-medium;
-  }
+/* Theme tokens (light) */
+:root {
+	--background: 0 0% 100%;
+	--foreground: 224 71.4% 4.1%;
+	--card: 0 0% 100%;
+	--card-foreground: 224 71.4% 4.1%;
+	--popover: 0 0% 100%;
+	--popover-foreground: 224 71.4% 4.1%;
+	--primary: 262.1 83.3% 57.8%;
+	--primary-foreground: 210 20% 98%;
+	--secondary: 220 14.3% 95.9%;
+	--secondary-foreground: 220.9 39.3% 11%;
+	--muted: 220 14.3% 95.9%;
+	--muted-foreground: 220 8.9% 46.1%;
+	--accent: 220 14.3% 95.9%;
+	--accent-foreground: 220.9 39.3% 11%;
+	--destructive: 0 84.2% 60.2%;
+	--destructive-foreground: 210 20% 98%;
+	--border: 220 13% 91%;
+	--input: 220 13% 91%;
+	--ring: 262.1 83.3% 57.8%;
+	--radius: 0.5rem;
 
-  .status-active {
-    @apply bg-success/10 text-success border border-success/20;
-  }
-
-  .status-pending {
-    @apply bg-warning/10 text-warning border border-warning/20;
-  }
-
-  .status-inactive {
-    @apply bg-muted text-muted-foreground border border-border;
-  }
-
-  .status-overdue {
-    @apply bg-destructive/10 text-destructive border border-destructive/20;
-  }
-
-  /* ERP Cards */
-  .erp-card {
-    @apply bg-card border border-border rounded-lg shadow-soft hover:shadow-medium transition-all duration-300;
-  }
-
-  .erp-card-gradient {
-    @apply bg-gradient-surface border border-border/50 rounded-lg shadow-soft hover:shadow-medium transition-all duration-300;
-  }
-
-  /* Dashboard KPI Cards */
-  .kpi-card {
-    @apply erp-card p-6 hover:scale-[1.02] transition-transform duration-300;
-  }
-
-  .kpi-card-primary {
-    @apply bg-gradient-primary text-primary-foreground border-primary/20;
-  }
-
-  .kpi-card-success {
-    @apply bg-gradient-success text-success-foreground border-success/20;
-  }
-
-  .kpi-card-warning {
-    @apply bg-gradient-warning text-warning-foreground border-warning/20;
-  }
-
-  /* Navigation Active State */
-  .nav-active {
-    @apply bg-sidebar-primary text-sidebar-primary-foreground shadow-glow;
-  }
-
-  .nav-hover {
-    @apply hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-smooth;
-  }
+	--sidebar-background: 0 0% 100%;
+	--sidebar-foreground: 240 5.3% 26.1%;
+	--sidebar-primary: 240 5.9% 10%;
+	--sidebar-primary-foreground: 0 0% 98%;
+	--sidebar-accent: 240 4.8% 95.9%;
+	--sidebar-accent-foreground: 240 5.9% 10%;
+	--sidebar-border: 220 13% 91%;
+	--sidebar-ring: 217.2 91.2% 59.8%;
 }
+
+/* Theme tokens (dark) */
+.dark {
+	--background: 222.2 40% 8%;
+	--foreground: 210 20% 96%;
+	--card: 222.2 40% 10%;
+	--card-foreground: 210 20% 96%;
+	--popover: 222.2 40% 10%;
+	--popover-foreground: 210 20% 98%;
+	--primary: 263.4 70% 50.4%;
+	--primary-foreground: 210 20% 96%;
+	--secondary: 220 20% 20%;
+	--secondary-foreground: 210 20% 96%;
+	--muted: 220 20% 20%;
+	--muted-foreground: 215 20.2% 70%;
+	--accent: 220 20% 24%;
+	--accent-foreground: 210 20% 98%;
+	--destructive: 0 62.8% 34%;
+	--destructive-foreground: 210 20% 98%;
+	--border: 220 18% 22%;
+	--input: 220 18% 22%;
+	--ring: 263.4 70% 50.4%;
+
+	--sidebar-background: 222.2 30% 10%;
+	--sidebar-foreground: 210 20% 96%;
+	--sidebar-primary: 210 20% 96%;
+	--sidebar-primary-foreground: 240 5.9% 10%;
+	--sidebar-accent: 220 20% 24%;
+	--sidebar-accent-foreground: 210 20% 96%;
+	--sidebar-border: 220 18% 22%;
+	--sidebar-ring: 263.4 70% 50.4%;
+}
+
+

@@ -1,0 +1,19 @@
+{
+  "jsc": {
+    "target": "es2020",
+    "parser": {
+      "syntax": "typescript",
+      "tsx": true
+    },
+    "transform": {
+      "react": {
+        "runtime": "automatic",
+        "useBuiltins": true
+      }
+    }
+  },
+  "module": {
+    "type": "es6"
+  },
+  "sourceMaps": false
+}
